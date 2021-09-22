@@ -1,4 +1,4 @@
-#!/home/harmony/Desktop/Karthik/karthik/DO-MY-STUFF/.venv/bin/python
+#!/opt/helpers/.venv/bin/python
 
 import argparse
 import os
@@ -21,10 +21,14 @@ for root, folders, files in os.walk(base_path, topdown=True):
     if '.git' in folders:
         repo_list.append(root)
 
+# print(repo_list)
+
 for repo in repo_list:
     command = "cd {0} && {1}".format(repo, args.command)
     output = subprocess.check_output(command, shell=True)
     if output:
-        print "=" * 30
-        print colored("\nExecuting on repo: {}\n".format(repo), 'red')
-        print output
+        repo_text = "Executing on repo: "
+        # print("=" * (len(repo_list) + len(repo)))
+        print("\n", colored(repo_text, "grey", "on_yellow"), colored(repo, "white", "on_blue", attrs=["bold", "dark"]), "\n", sep="")
+        # print("=" * (len(repo_list) + len(repo)))
+        print(output.decode())

@@ -1,9 +1,10 @@
-#!/usr/bin/python3.5
+#!/opt/helpers/.venv/bin/python
 
 import os
 import csv
 import argparse
 UNWANTED = ('.pyc', '.png', '.jpg', '.gif', '.db', '.pdf', '.mp3', '.ttf', '.eot', '.woff', '.cer','.otf','.jpeg','.gz','.txt','.key')
+TO_CHECK = ('.py', '.xml', '.js')
 # client_name = input("Enter the client name : ")
 parser = argparse.ArgumentParser()
 parser.add_argument('csv_file', type=str, nargs='?')
@@ -33,7 +34,7 @@ if not is_module_path:
                             module_lines_count = 0
                             for mr, md, mf in os.walk(module_path, topdown=False):
                                 for file in mf:
-                                    if 'LICENSE' not in file and not file.endswith(UNWANTED):
+                                    if 'LICENSE' not in file and file != '__manifest__.py' and file != '__openerp__.py' and file.endswith(TO_CHECK):
                                         rf = os.path.join(mr, file)
                                         with open(rf, 'r', errors='replace') as f:
                                             for i in f.readlines():
@@ -60,7 +61,7 @@ else:
     module_lines_count = 0
     for mr, md, mf in os.walk(path, topdown=False):
         for file in mf:
-            if 'LICENSE' not in file and not file.endswith(UNWANTED):
+            if 'LICENSE' not in file and file.endswith(TO_CHECK):
                 rf = os.path.join(mr, file)
                 with open(rf, 'r', errors='replace') as f:
                     for i in f.readlines():
